@@ -11,6 +11,10 @@ body {
     margin:auto;
 }
 
+caption {
+    margin-bottom: 10px;
+}
+
 .temperature {
     color: blue;
 }
@@ -24,5 +28,5 @@ body {
 }
 
 td {
-    padding: 5px;
+    padding: 10px;
 }

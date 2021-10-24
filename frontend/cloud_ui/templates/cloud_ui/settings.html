@@ -2,63 +2,85 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>g28-app-setting page</title>
+    <title>Settings</title>
+
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'cloud_ui/style_trends.css' %}">
 </head>
-<img src="https://i.ytimg.com/vi/XHu8Mii34cc/maxresdefault.jpg"
+
+<body>
+    
+    <img src="https://i.ytimg.com/vi/XHu8Mii34cc/maxresdefault.jpg"
         width=100%
         height=50%
         title="living space air quality maintenance system"
         alt="living space air quality maintenance system picture"
-/>
-<body>
-<div style="width:100%;text-align:center">
-    <form action="./getAPIData" method="GET">
-       <label>term：</label>
-        <select name="term">
-            <option value="1">temperature</option>
-            <option value="2">PM2.5</option>
-            <option value="3">humidity</option>
-        </select>
-        <input name="value" type="text" style="width:300px;" placeholder="Please enter the data value you want to modify" >
-        <br>
+    />
+
+    <!-- <table>
+        <tr>
+            <th></th>
+        </tr>
+    </table> -->
+
+    <a href="/">
+        <button>
+            Return Home
+        </button>
+    </a>
+
+
+
+    <!-- <div style="width:100%;text-align:center">
+        <form action="./getAPIData" method="GET">
         <label>term：</label>
-        <select name="term">
-            <option value="1">PM2.5</option>
-            <option value="2">temperature</option>
-            <option value="3">humidity</option>
-        </select>
-        <input name="value" type="text" style="width:300px;" placeholder="Please enter the data value you want to modify" >
-        <br>
-        <label>term：</label>
-        <select name="term">
-            <option value="1">humidity</option>
-            <option value="2">PM2.5</option>
-            <option value="3">temperature</option>
-        </select>
-        <input name="value" type="text" style="width:300px;" placeholder="Please enter the data value you want to modify" >
-        <br>
-        <pre>
+            <select name="term">
+                <option value="1">temperature</option>
+                <option value="2">PM2.5</option>
+                <option value="3">humidity</option>
+            </select>
+            <input name="value" type="text" style="width:300px;" placeholder="Please enter the data value you want to modify" >
+            <br>
+            <label>term：</label>
+            <select name="term">
+                <option value="1">PM2.5</option>
+                <option value="2">temperature</option>
+                <option value="3">humidity</option>
+            </select>
+            <input name="value" type="text" style="width:300px;" placeholder="Please enter the data value you want to modify" >
+            <br>
+            <label>term：</label>
+            <select name="term">
+                <option value="1">humidity</option>
+                <option value="2">PM2.5</option>
+                <option value="3">temperature</option>
+            </select>
+            <input name="value" type="text" style="width:300px;" placeholder="Please enter the data value you want to modify" >
+            <br>
 
+            <pre></pre>
+            
+            <label>manipulate action：</label>
+            
+            <select name="operation">
+            
+                <option value="1">Switch on air-conditioner</option>
+                <option value="2">Switch off air-conditioner</option>
+                <option value="3">open windows</option>
+                <option value="4">close windows</option>
+                <option value="5">Turn on the dehumidifier</option>
+                <option value="6">Turn on the humidifier</option>
 
-        </pre>
-        <label>manipulate action：</label>
-        <select name="operation">
-            <option value="1">Switch on air-conditioner</option>
-            <option value="2">Switch off air-conditioner</option>
-            <option value="3">open windows</option>
-            <option value="4">close windows</option>
-            <option value="5">Turn on the dehumidifier</option>
-            <option value="6">Turn on the humidifier</option>
+            </select>
+            <br>
 
-        </select>
-        <br>
-        <pre>
-
-
-        </pre>
-        <input style="width:100px;height:30px;" type="submit" value="submit">&emsp;&emsp;
-        <input style="width:100px;height:30px;" type="reset" value="reset to default setting">
-    </form>
-</div>
+            <pre></pre>
+            
+            <input style="width:100px;height:30px;" type="submit" value="submit">&emsp;&emsp;
+            <input style="width:100px;height:30px;" type="reset" value="reset to default setting">
+        
+        </form>
+    </div> -->
 </body>
 </html>
