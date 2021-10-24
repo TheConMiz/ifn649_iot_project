@@ -1,8 +1,8 @@
 from django.shortcuts import render
-import requests
+from django.http import JsonResponse
 from preprocessing.models import *
 from preprocessing.views import *
-
+import requests
 
 # Create your views here.
 def getProcessedData(request):
@@ -28,3 +28,24 @@ def getProcessedData(request):
 
 def getSettings(request):
     return render(request, "cloud_ui/settings.html")
+
+def getTrendsPage(request):
+    return render(request, "cloud_ui/trends.html")
+
+def getTrends(request):
+
+    data = []
+    labels = []
+
+    query = Air_Quality_Reading.objects.all()
+
+    for item in query:
+        data.append(item.pm25_value)
+        labels.append(item.time_stamp.time())
+
+    context = {
+        "labels": labels,
+        "data": data,
+    }
+    
+    return JsonResponse(data=context)

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js" integrity="sha512-GMGzUEevhWh8Tc/njS0bDpwgxdCJLQBWG3Z2Ct+JGOpVnEmjvNx6ts4v6A2XJf1HOrtOsfhv3hBKpK9kE5z8AQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'cloud_ui/style_trends.css' %}">
+
+    <title>Trends</title>
+</head>
+<body>
+    
+    <div id="temperature">
+        <canvas id="temperature_canvas" width="500" height="300"></canvas>
+    </div>
+
+    <script>
+
+        var data = [];
+        var labels = [];
+        var endpoint = "/api/trends";
+
+
+        $.ajax({
+            method: "GET",
+            url: endpoint,
+            success: function(data){
+                console.log(data.data)
+                labels = data.labels;
+                data = data.data;
+
+                console.log(Date.parse(labels[0]))
+                
+                var temperature_config = {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Air Quality (PM2.5) Readings",
+                            data: data,
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                type: 'time',
+                                time: {
+                                    unit: 'minute'
+                                }
+                            }]
+                        },
+                        responsive: false,
+                    }
+                };
+
+                var context = document.getElementById("temperature_canvas").getContext("2d");
+
+                var temperature_chart = new Chart(context, temperature_config);
+
+            },
+
+            error: function(error){
+                console.log(error);
+            }
+        });
+
+    </script>
+
+
+</body>
+</html>
