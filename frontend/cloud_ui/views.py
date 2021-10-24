@@ -1,3 +1,4 @@
+from django.db.models import query
 from django.shortcuts import render
 from django.http import JsonResponse
 from preprocessing.models import *
@@ -32,7 +33,7 @@ def getSettings(request):
 def getTrendsPage(request):
     return render(request, "cloud_ui/trends.html")
 
-def getTrends(request):
+def getAirQualityTrends(request):
 
     data = []
     labels = []
@@ -41,7 +42,44 @@ def getTrends(request):
 
     for item in query:
         data.append(item.pm25_value)
-        labels.append(item.time_stamp.time())
+        labels.append(item.time_stamp.strftime("%H:%M:%S"))
+
+    context = {
+        "labels": labels,
+        "data": data,
+    }
+    
+    return JsonResponse(data=context)
+
+def getTemperatureTrends(request):
+
+    data = []
+    labels = []
+
+    query = Temperature_Reading.objects.all()
+
+    for item in query:
+        data.append(item.temperature_value)
+        labels.append(item.time_stamp.strftime("%H:%M:%S"))
+
+    context = {
+        "labels": labels,
+        "data": data,
+    }
+    
+    return JsonResponse(data=context)
+
+def getHumidityTrends(request):
+
+    data = []
+    labels = []
+
+    query = Humidity_Reading.objects.all()
+
+
+    for item in query:
+        data.append(item.humidity_value)
+        labels.append(item.time_stamp.strftime("%H:%M:%S"))
 
     context = {
         "labels": labels,

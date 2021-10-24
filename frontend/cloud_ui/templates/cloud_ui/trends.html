@@ -16,28 +16,51 @@
 </head>
 <body>
     
+    <a href="/">
+        <button>
+            Return Home
+        </button>
+    </a>
+
+    
     <div id="temperature">
         <canvas id="temperature_canvas" width="500" height="300"></canvas>
     </div>
 
+    <div id="humidity">
+        <canvas id="humidity_canvas" width="500" height="300"></canvas>
+    </div>
+
+    <div id="air_quality">
+        <canvas id="air_quality_canvas" width="500" height="300"></canvas>
+    </div>
+
     <script>
+
+        // function parseTime(t) {
+        //     var d = new Date();
+        //     var time = t.match( /(\d+)(?::(\d\d))?\s*(p?)/ );
+        //     d.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
+        //     d.setMinutes( parseInt( time[2]) || 0 );
+        //     return d.getMinutes();
+        // }
 
         var data = [];
         var labels = [];
-        var endpoint = "/api/trends";
 
+        var temperature_endpoint = "/api/trends/temperature";
+        var humidity_endpoint = "/api/trends/humidity";
+        var air_quality_endpoint = "/api/trends/air_quality";
 
+        // Air Quality
         $.ajax({
             method: "GET",
-            url: endpoint,
+            url: air_quality_endpoint,
             success: function(data){
-                console.log(data.data)
                 labels = data.labels;
                 data = data.data;
-
-                console.log(Date.parse(labels[0]))
                 
-                var temperature_config = {
+                var config = {
                     type: 'line',
                     data: {
                         labels: labels,
@@ -48,10 +71,57 @@
                     },
                     options: {
                         scales: {
-                            xAxes: [{
+                            x: [{
                                 type: 'time',
                                 time: {
                                     unit: 'minute'
+                                },
+                                title: {
+                                    text: "Time"
+                                }
+                            }]
+                        },
+                        responsive: false,
+                    }
+                };
+
+                var context = document.getElementById("air_quality_canvas").getContext("2d");
+                var temperature_chart = new Chart(context, config);
+
+            },
+
+            error: function(error){
+                console.log(error);
+            }
+
+        });
+
+        // Temperature
+        $.ajax({
+            method: "GET",
+            url: temperature_endpoint,
+            success: function(data){
+                labels = data.labels;
+                data = data.data;
+                
+                var config = {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Temperature (°C) Readings",
+                            data: data,
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: [{
+                                type: 'time',
+                                time: {
+                                    unit: 'minute'
+                                },
+                                title: {
+                                    text: "Time"
                                 }
                             }]
                         },
@@ -61,13 +131,59 @@
 
                 var context = document.getElementById("temperature_canvas").getContext("2d");
 
-                var temperature_chart = new Chart(context, temperature_config);
+                var temperature_chart = new Chart(context, config);
 
             },
 
             error: function(error){
                 console.log(error);
             }
+
+        });
+
+        // Humidity
+        $.ajax({
+            method: "GET",
+            url: humidity_endpoint,
+            success: function(data){
+                labels = data.labels;
+                data = data.data;
+                
+                var config = {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Humidity (%) Readings",
+                            data: data,
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: [{
+                                type: 'time',
+                                time: {
+                                    unit: 'minute'
+                                },
+                                title: {
+                                    text: "Time"
+                                }
+                            }]
+                        },
+                        responsive: false,
+                    }
+                };
+
+                var context = document.getElementById("humidity_canvas").getContext("2d");
+
+                var temperature_chart = new Chart(context, config);
+
+            },
+
+            error: function(error){
+                console.log(error);
+            }
+
         });
 
     </script>
